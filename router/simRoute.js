@@ -1,14 +1,18 @@
 const router = require('express').Router()
-const Sim = require('../models/Sim')
-const User = require('../models/User')
 const passport = require('passport')
-const {simCreateController, getSimController} = require('../controller/simController')
+const {simCreateController, getSimController,getSimbyParams, updateActiveSim} = require('../controller/simController')
 const { isUser } = require('../validator/isUser')
+const { isAdmin } = require('../validator/isAdmin')
 
-router.get('/',passport.authenticate('jwt', { session: false }), isUser , getSimController)
 
-router.post('/create',simCreateController)
+router.get('/',passport.authenticate('jwt', { session: false }),isUser , getSimController)
 
+router.get('/:id',isUser, isAdmin,getSimbyParams)
+
+
+router.post('/create' ,isUser,isAdmin,simCreateController)
+
+router.post('/update/:id' ,isUser,isAdmin,updateActiveSim)
 
 
 module.exports = router

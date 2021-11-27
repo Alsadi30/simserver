@@ -54,6 +54,12 @@ const Sim = db.define('sim', {
         type: DataTypes.DATE,
         allownNull: false,
       
+    },
+    activatedAt: {
+        type: DataTypes.DATE, 
+    },
+    soldAt: {
+        type: DataTypes.DATE, 
     }
 }, {
     tableName:'sim'

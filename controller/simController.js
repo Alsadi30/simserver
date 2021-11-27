@@ -25,7 +25,7 @@ exports.simCreateController = async (req, res) => {
     res.status(200).json({createdSim})
     } catch(e){
         console.log(e)
-        res.status(500).json({msg:'server problem'})
+        res.status(500).json({e})
     }
     
 
@@ -46,4 +46,37 @@ exports.getSimController = async (req, res) => {
         res.status(500).json({e})
     }
 
+}
+
+exports.getSimbyParams = async (req,res) => {
+    
+    let { id } = req.params
+    
+    try {
+        let sims = await Sim.findAll({ where: { userId: id } })
+    
+        res.status(201).json({sims})
+    }
+    catch (e) {
+        console.log(e)
+        res.status(500).json({e})
+    }
+
+
+}
+
+
+exports.updateActiveSim = async (req, res) => {
+
+    let { id } = req.params
+    
+    try {
+        let updatedSim = await Sim.update({ approvalStatus: true,activatedAt:Date.now() }, { where: {id:id} })
+        
+        res.status(201).json({updatedSim})
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({e})
+    }
+    
 }

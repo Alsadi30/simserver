@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize')
 
-module.exports = new Sequelize('sim', 'postgres', 'pass123', {
-    host: 'localhost',
-    dialect: 'postgres' 
+module.exports = new Sequelize('sims', 'root', 'passforroot123', {
+    host: 'localhost', 
+  dialect: 'postgres',
+    port:5432
   });

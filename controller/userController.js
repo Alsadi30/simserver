@@ -7,7 +7,7 @@ const {
     validationResult
 } = require('express-validator')
 const jwt = require('jsonwebtoken');
-
+const SECRET = process.env.USERSECRET
 
 
 
@@ -99,7 +99,7 @@ exports.login = async (req, res) => {
     if (!errors.isEmpty()) {
         res.status(404).json({
             error:errors.mapped(),
-            message: "user not found"
+            message: "Please Provide Valid Credentials"
         })
     }
 
@@ -110,7 +110,7 @@ exports.login = async (req, res) => {
 
         if (!user) {
             res.status(400).json({
-                message: "users not found"
+                message: "Please Provide Valid Credentials"
             })
         }
 
@@ -118,7 +118,7 @@ exports.login = async (req, res) => {
 
         if (!match) {
             res.status(402).json({
-                message: "password doesnot match"
+                message: "Please Provide Valid Credentials"
             })
         }
         if (match) {
@@ -126,8 +126,8 @@ exports.login = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-            }, 'SECRET', {
-                expiresIn: '2h'
+            }, SECRET, {
+                expiresIn: '16h'
             })
 
             res.status(200).json({
@@ -140,10 +140,10 @@ exports.login = async (req, res) => {
 
     } catch (e) {
         res.status(500).json({
-            message: e.message
+            message: 'Server Error Occured'
         })
         console.log(e)
-        next(e)
+        
     }
 
 
@@ -158,7 +158,19 @@ exports.getAllUserController = async (req, res) => {
         res.status(201).json({users})
         
     } catch (e) {
-       res.status(500).json('Server Problem')
+       res.status(500).json({e})
+    }
+}
+
+
+exports.getNonActiveUserContorller = async (req, res) => {
+    try {
+        let users = await User.findAll({ where:{isActive:false}})
+
+        res.status(201).json({users})
+        
+    } catch (e) {
+       res.status(500).json({e})
     }
 }
     
@@ -166,19 +178,17 @@ exports.getAllUserController = async (req, res) => {
 exports.updateUser = async (req, res) => {
     let {id} = req.params
    
-   try {
-       let user = await User.update({isActive:true},{ where: { id } })
-    console.log(user)
-       if(!user) res.json({msg:'user not found'})
+    try {
+        let user = await User.update({ isActive: true }, { where: { id } })
+        console.log(user)
+        if (!user) res.json({ msg: 'user not found' })
        
-    // user.isActive = true
 
-    // let updatedUser = await User.create({user})
     
-    res.status(201).json({ user })
-   } catch (error) {
-       console.log(error)
-       res.status(500).json(error)
+        res.status(201).json({ user })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
    }
     
 }

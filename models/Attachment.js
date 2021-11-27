@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/database')
 const Sim = require('./Sim')
-// const sequelize = new Sequelize('sqlite::memory:');
+
 
 const Attachment = db.define('attachment', {
     // Model attributes are defined here
@@ -23,6 +23,9 @@ const Attachment = db.define('attachment', {
         type: DataTypes.STRING
     },
     file_4: {
+        type: DataTypes.STRING
+    },
+    file_5: {
         type: DataTypes.STRING
     },
 } ,{

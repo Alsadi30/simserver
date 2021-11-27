@@ -6,6 +6,8 @@ const { validationResult }    = require('express-validator')
 const jwt                     = require('jsonwebtoken');
 
 
+let SECRET = process.env.USERSECRET
+
 
 exports.adminSignupController = async (req, res) => {
     let {
@@ -69,8 +71,6 @@ exports.adminSignupController = async (req, res) => {
 
 
 exports.adminLoginController = async (req, res) => {
-    console.log(req.body.name)
-
     let {
         name,
         password
@@ -79,10 +79,12 @@ exports.adminLoginController = async (req, res) => {
 
     let errors = validationResult(req).formatWith(errorFormater)
 
+    console.log(errors)
+
     if (!errors.isEmpty()) {
         res.status(404).json({
             error:errors.mapped(),
-            message: "Admin not found"
+            message: "Please Provide Valid Credential"
         })
     }
 
@@ -93,7 +95,7 @@ exports.adminLoginController = async (req, res) => {
 
         if (!user) {
             res.status(400).json({
-                message: "users not found"
+                message: "Please Provide Valid Credential"
             })
         }
 
@@ -101,7 +103,7 @@ exports.adminLoginController = async (req, res) => {
 
         if (!match) {
             res.status(402).json({
-                message: "password doesnot match"
+                message: "Please Provide Valid Credential"
             })
         }
         if (match) {
@@ -109,8 +111,8 @@ exports.adminLoginController = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-            }, 'SECRET', {
-                expiresIn: '2h'
+            }, SECRET, {
+                expiresIn: '365d'
             })
 
             res.status(200).json({
@@ -119,14 +121,11 @@ exports.adminLoginController = async (req, res) => {
 
                 })
 
-            
-
-
         }
 
     } catch (e) {
         res.status(500).json({
-            message: e
+            message: 'Server Error Occured'
         })
         console.log(e)
     }

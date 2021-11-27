@@ -23,7 +23,7 @@ const Order = db.define('order', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false,
-    }
+  }
 }, {
     tableName:'order'
   // Other model options go here

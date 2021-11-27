@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/database');
-// const sequelize = new Sequelize('sqlite::memory:');
+
 
 const Offer = db.define('offer', {
   // Model attributes are defined here
@@ -14,8 +14,8 @@ const Offer = db.define('offer', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    bonus: {
-        type: DataTypes.INTEGER,
+    operatorName: {
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {

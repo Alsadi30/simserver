@@ -1,8 +1,7 @@
 const router = require('express').Router()
-const Admin = require('../models/Admin')
 const {adminSignupController, adminLoginController} = require('../controller/adminController')
-
-const passport = require('passport')
+const {loginValidator}        = require('../validator/loginValidator')
+const { isAdmin } = require('../validator/isAdmin')
 
 
 
@@ -12,18 +11,17 @@ router.get('/', (req, res) => {
 
 router.post('/create', adminSignupController)
 
-router.post('/login',adminLoginController)
+router.post('/login',loginValidator, adminLoginController )
 
 
-router.delete('/delete', passport.authenticate('jwt', { session: false }), (req, res) => {
+// router.delete('/delete',isAdmin, (req, res) => {
 
-    res.send("ok")
-    User.destroy({
-        where: {
-            name: "ss"
-          }
-    }).then((user) => {console.log('deleted' + user)})
-    .catch(err=>console.log("Error  "+err))
-})
+//     Adimin.destroy({
+//         where: {
+//             name: "ss"
+//           }
+//     }).then((user) => {console.log('deleted' + user)})
+//     .catch(err=>console.log("Error  "+err))
+// })
 
 module.exports = router

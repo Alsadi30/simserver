@@ -1,5 +1,5 @@
-const Admin = require('../models/Admin')
 const  jwt = require('jsonwebtoken')
+const SECRET = process.env.USERSECRET
 
 exports.isUser = async (req,res,next) => {
     try{
@@ -9,17 +9,11 @@ exports.isUser = async (req,res,next) => {
         let decodedData 
 
         if (token) {
-            decodedData = jwt.verify(token, 'SECRET')
-            req.userID = decodedData?.id;
-        
-
-        
+            decodedData = jwt.verify(token, SECRET)
+            req.userID = decodedData?.id;        
             next()
         }
-
-       
- 
-       
+           
     }catch(error){
        console.log(error)
     }

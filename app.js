@@ -1,4 +1,5 @@
-const express       = require('express')
+require('dotenv').config()
+const express = require('express')
 const app           = express()
 const db            = require('./config/database')
 const setMiddleware = require("./middleware/middleware");
@@ -8,6 +9,7 @@ const  path         = require('path');
 
 app.use(express.static(path.join(__dirname, 'public')));
 setMiddleware(app)
+
 // app.get('/', (req, res) => {
 //     res.send('I am ok , you should start working')
 // })
@@ -22,8 +24,9 @@ app.use('/api/attachment', require('./router/attachmentRoute'))
 app.use('/api/imadmin', require('./router/adminRoute'))
 app.use('/api/user', require('./router/userRoute'))
 app.use('/api/sim', require('./router/simRoute'))
-app.use('/api/offer', require('./router/offerRoute'))
 app.use('/api/order', require('./router/orderRoute'))
+app.use('/api/offers', require('./router/offerRoute'))
+
 
 
 
@@ -39,7 +42,7 @@ app.use((req, res, next) => {
 
 //Connection 
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000
 
 app.listen(PORT, async () => {
          
