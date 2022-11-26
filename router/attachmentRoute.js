@@ -20,9 +20,9 @@ router.post(`/:id`, isUser, upload.fields([{ name: 'file1', maxCount: 1 }, { nam
     let moSim = await Sim.findOne({ where: { id } })
 
 
-    let { clientfirstname,clientlastname, codicifiscale, sendingNumber, ricarica, salesPrice, Operator, ICCID, simNumber, note,Bill } = req.body
+    let { Offer, clientfirstname,clientlastname, codicifiscale, sendingNumber, ricarica, salesPrice, Operator, ICCID, simNumber, note,Bill } = req.body
     
-    console.log(Bill)
+    
 
     // let fileName = req.file.filename
 
@@ -32,6 +32,7 @@ router.post(`/:id`, isUser, upload.fields([{ name: 'file1', maxCount: 1 }, { nam
             children: [
                 new Paragraph({
                     text: `
+                    Offer Name : ${Offer}
                     Client First Name : ${clientfirstname}
                     Client Last Name : ${clientlastname}
                     New ICCID: ${moSim.dataValues.ICCID}

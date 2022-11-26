@@ -23,8 +23,6 @@ const Sim = db.define('sim', {
     },
     simNumber: {
         type: DataTypes.BIGINT,
-        allowNull: false,
-        unique:true,
     },
     salesPrice: {
         type: DataTypes.INTEGER,
@@ -60,6 +58,9 @@ const Sim = db.define('sim', {
     },
     soldAt: {
         type: DataTypes.DATE, 
+    },
+    comment: {
+      type: DataTypes.STRING
     }
 }, {
     tableName:'sim'

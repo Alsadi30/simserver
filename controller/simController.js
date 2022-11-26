@@ -69,9 +69,11 @@ exports.getSimbyParams = async (req,res) => {
 exports.updateActiveSim = async (req, res) => {
 
     let { id } = req.params
-    
+    let { comment } = req.body   
+    console.log(req.body)
+    console.log(comment)    
     try {
-        let updatedSim = await Sim.update({ approvalStatus: true,activatedAt:Date.now() }, { where: {id:id} })
+        let updatedSim = await Sim.update({ approvalStatus: true,activatedAt:Date.now(),comment }, { where: {id:id} })
         
         res.status(201).json({updatedSim})
     } catch (e) {
